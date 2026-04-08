@@ -5,6 +5,7 @@ spring:
     username: postgres
     password: postgres
   jpa:
+    open-in-view: false
     hibernate:
       ddl-auto: update
     show-sql: true
@@ -46,5 +47,4 @@ USER_NAME: Khaled_Sarhan
 ID: 55-22068
 
 app:
-  version: "1.0.0"
-  description: "Smart E-Commerce Platform"
+  description: "Smart E-Commerce Purchase API"

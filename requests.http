@@ -1,0 +1,95 @@
+### Seed
+  GET http://localhost:8080/api/seed
+
+### PostgreSQL - all products
+  GET http://localhost:8080/api/products
+
+### PostgreSQL - by category
+  GET http://localhost:8080/api/products/category/ELECTRONICS
+
+### MongoDB - all products
+  GET http://localhost:8080/api/mongo/products
+
+### MongoDB - by tag
+  GET http://localhost:8080/api/mongo/products/tag/apple
+
+### MongoDB - category averages
+  GET http://localhost:8080/api/mongo/products/analytics/category-avg
+
+### Cassandra - sensor readings
+  GET http://localhost:8080/api/sensors/user-activity-alice/readings/latest?limit=5
+
+### Neo4j - recommendations
+  GET http://localhost:8080/api/graph/persons/Alice/recommendations?limit=5
+
+### Neo4j - friends of friends
+  GET http://localhost:8080/api/graph/persons/Alice/fof
+
+### Elasticsearch - full text search
+  GET http://localhost:8080/api/search?q=laptop
+
+### Elasticsearch - by name
+  GET http://localhost:8080/api/search/products/name?q=macbook
+
+### Smart page (all 6 DBs)
+  GET http://localhost:8080/api/smart/product/1?userName=Alice
+
+### ── Purchase Flow ─────────────────────────────────────
+
+### POST purchase
+POST http://localhost:8080/55-22068/purchases
+Content-Type: application/json
+
+{
+  "personName": "Alice",
+  "productId": 46,
+  "quantity": 2,
+  "purchaseDetails": {
+    "paymentMethod": "VISA ending 4242",
+    "shippingAddress": "123 Main St, Cairo",
+    "giftWrap": true,
+    "couponCode": "SAVE10"
+  }
+}
+
+### Verify PostgreSQL stock deducted
+GET http://localhost:8080/api/products/46
+
+### Verify MongoDB receipt
+GET http://localhost:8080/55-22068/purchases/person/Alice
+
+### Verify Neo4j recommendations (Bob follows Alice)
+GET http://localhost:8080/api/graph/persons/Bob/recommendations?limit=5
+
+### Verify Cassandra activity log
+GET http://localhost:8080/api/sensors/user-activity-alice/readings
+
+### Verify Elasticsearch
+GET http://localhost:8080/api/search/products/category/ELECTRONICS
+
+### ── Dashboard Flow ──────────────────────────────────────
+
+### Dashboard - first call (servedFromCache: false)
+GET http://localhost:8080/55-22068/dashboard/Alice
+
+### Dashboard - second call (servedFromCache: true)
+GET http://localhost:8080/55-22068/dashboard/Alice
+
+### Make another purchase (evicts cache)
+POST http://localhost:8080/55-22068/purchases
+Content-Type: application/json
+
+{
+  "personName": "Alice",
+  "productId": 47,
+  "quantity": 1,
+  "purchaseDetails": {
+    "paymentMethod": "VISA ending 4242",
+    "shippingAddress": "123 Main St, Cairo",
+    "giftWrap": false,
+    "couponCode": ""
+  }
+}
+
+### Dashboard after new purchase (servedFromCache: false, updated data)
+GET http://localhost:8080/55-22068/dashboard/Alice

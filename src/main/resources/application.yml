@@ -5,6 +5,7 @@ spring:
     username: postgres
     password: postgres
   jpa:
+    open-in-view: false
     hibernate:
       ddl-auto: update
     show-sql: true
@@ -42,5 +43,8 @@ spring:
   elasticsearch:
     uris: http://localhost:9200
 
-USER_NAME: FirstName_LastName # Replace with your name
-ID: Your_ID # Replace with your ID
+USER_NAME: Khaled_Sarhan
+ID: 55-22068
+
+app:
+  description: "Smart E-Commerce Purchase API"

@@ -64,7 +64,12 @@ public class DataSeederController {
 
         result.put("postgresql", seedPostgres() + " products inserted");
         result.put("mongodb", seedMongo() + " products inserted");
-        result.put("neo4j", seedNeo4j());
+        try {
+            result.put("neo4j", seedNeo4j());
+        } catch (Exception e) {
+            log.warn("Neo4j seeding failed (non-fatal): {}", e.getMessage());
+            result.put("neo4j", "SKIPPED - " + e.getMessage());
+        }
         result.put("cassandra", seedCassandra() + " activity events inserted");
         result.put("elasticsearch", seedElasticsearch() + " products indexed");
 

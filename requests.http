@@ -42,7 +42,7 @@ Content-Type: application/json
 
 {
   "personName": "Alice",
-  "productId": 31,
+  "productId": 46,
   "quantity": 2,
   "purchaseDetails": {
     "paymentMethod": "VISA ending 4242",
@@ -53,7 +53,7 @@ Content-Type: application/json
 }
 
 ### Verify PostgreSQL stock deducted
-GET http://localhost:8080/api/products/31
+GET http://localhost:8080/api/products/46
 
 ### Verify MongoDB receipt
 GET http://localhost:8080/55-22068/purchases/person/Alice
